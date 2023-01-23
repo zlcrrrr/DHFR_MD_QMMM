@@ -95,7 +95,7 @@ Finally, extract the calculated chemical shifts. Results are in ./results/
 # Organization of this directory
 ```
 .
-├── AmberTools22.yml                        # environment file
+├── AmberTools22.yml
 ├── README.md
 ├── afnmr
 │   ├── extract_shifts.sh
