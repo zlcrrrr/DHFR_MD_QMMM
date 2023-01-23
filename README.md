@@ -16,7 +16,6 @@ This repo contains the code and files for the paper titled *Predicted and Experi
 
 We provide here an example to run a QM/MM calculation using ORCA for MET1 in the first snapshot of the MD trajectory (schrodinger_md_0.pdb).
 
-### Install
 Install [Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/), [AFNMR](https://github.com/dacase/afnmr), and [ORCA](https://www.orcasoftware.de/tutorials_orca/).
 
 Clone the repository and setup the conda environment
