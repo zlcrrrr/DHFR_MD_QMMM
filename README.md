@@ -6,7 +6,7 @@ This repo contains the code and files for the paper titled *Predicted and Experi
 
 ## Prerequisite
 * [Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/)
-* [Schrödinger Suite](https://www.schrodinger.com/downloads/releases)
+* [Schrödinger Suite](https://www.schrodinger.com/downloads/releases) (Not required for running the minimal example below, but required for reproducing out result)
 * [AFNMR](https://github.com/dacase/afnmr)
 * [AmberTools](https://ambermd.org/AmberTools.php)
 * [ORCA](https://www.orcasoftware.de/tutorials_orca/)
