@@ -1,0 +1,87 @@
+#!/usr/bin/perl -w
+
+#***************************************************************
+# collect shifts from orca outputs
+#   usage:  getshifts-orca basename; rdb file to stdout
+#***************************************************************
+
+sub numerically { $a <=> $b; }
+$resi = 0;
+
+@ARGV == 2 or die " usage: getshifts-demon reference basename \n";
+$reference = "$ARGV[0]";
+$basename = "$ARGV[1]";
+
+#  reference shieldings; (these are basis/functional dependent!)
+if( $reference eq "ref_seg0" ){
+   $reference_set = "OLYP ref_seg0 ";
+   $ref{"H"} = 33.2;   # TMS
+   $ref{"C"} = 189.8;  # TMS
+   $ref{"N"} = 241.0;  # CH3NO2 + 380.5
+   $ref{"P"} = 300.0;  # guess
+   $ref{"F"} = 130.2;  # CFCl3
+} elsif( $reference eq "ref_seg1" ){
+   $reference_set = "OLYP ref_seg1 ";
+   $ref{"H"} = 31.7;   # TMS
+   $ref{"C"} = 183.0;  # TMS
+   $ref{"N"} = 255.2;  # CH3NO2 + 380.5
+   $ref{"P"} = 325.0;  # guess
+   $ref{"F"} = 139.6;  # CFCl3
+} else {
+   die "unrecognized reference set: $reference\n";
+}
+
+if( $basename eq "header" ){
+   # document the reference shieldings being used:
+   printf( "# results from afnmr-orca:\n" );
+   printf( "# reference shieldings used for H,C,N,P,F: %6.2f %6.2f %6.2f %6.2f %6.2f %s\n",
+       $ref{"H"}, $ref{"C"}, $ref{"N"}, $ref{"P"}, $ref{"F"}, $reference_set );
+   printf( "res\tatomname\tresname\tshift\tdelta\teta\n" );
+   printf( "4N\t8\t8\t10N\t10N\t10N\n" );
+   exit(0);
+}
+
+$_ = $basename; s/.+(\d\d\d)/$1/; $resi = $_;
+
+# get atom and residue names from pqr file:
+
+open (PQR, "<", "$basename". ".pqr") or die "cannot open $basename.pqr";
+$iat = 0;
+while (<PQR>) {
+	next unless m/^ATOM  /; 
+    @f = split( ' ', $_ );
+	$iat++; $aname[$iat] = $f[2]; $rname[$iat] = $f[3]; $res[$iat] = $f[4];
+	$rname[$iat] =~ s/^([ACTGU])[35]$/$1/;  # fix 3',5' ends of nucleic acids
+}
+close PQR;
+
+# read in the shift data
+
+open (OUT, "<", "$basename" . ".out") or die "cannot open $basename.out";
+
+while (<OUT>) {
+
+   if (m/^ Nucleus /) {
+       @f = split( ' ', $_ ); $_ = $f[1]; s/(\d+)(\w)/x/; 
+       $iat = $1 + 1;   $elem = $2;
+       next if $elem eq "O";  next if $rname[$iat] eq "MOD";
+       next if $elem eq "S";
+       # skip 23 lines:
+       <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>;
+       <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>; <OUT>;
+       <OUT>; <OUT>; <OUT>; 
+       $total = <OUT>; @f = split( ' ', $total );
+       if( $f[0] ne "Total" ){ print "Did not find Total for atom $iat\n"; }
+       $siso = $f[5]; $xx=$f[1]; $yy=$f[2]; $zz=$f[3];
+       @eigv = sort numerically $xx,$yy,$zz;
+       if( abs($siso - $eigv[0]) > abs($siso - $eigv[2]) ){
+          $delta  = $siso - $eigv[0];  $eta = ($eigv[2]-$eigv[1])/$delta;
+       } else {
+          $delta  = $siso - $eigv[2];  $eta = ($eigv[0]-$eigv[1])/$delta;
+       }
+       printf "%d\t%s\t%s\t%8.3f\t%8.3f\t%8.3f\t%8.3f\t%8.3f\t%8.3f\n", 
+            $res[$iat],$aname[$iat],$rname[$iat], $ref{$elem} - $siso,
+            $delta,$eta,$xx,$yy,$zz;
+   }
+}
+close OUT;

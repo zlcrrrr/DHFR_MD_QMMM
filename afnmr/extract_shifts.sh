@@ -1,4 +1,8 @@
 #!/bin/bash
+if [! -f $AFNMRHOME/bin/getshifts-orca-old ]; then
+    cp ../scripts/getshifts-orca-old $AFNMRHOME/bin/
+fi
+
 if [ ! -d results ]
 then
 	mkdir results
