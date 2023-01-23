@@ -6,7 +6,7 @@ This repo contains the code and files for the paper titled *Predicted and Experi
 
 ## Prerequisite
 * [Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/)
-* [Schrödinger Suite](https://www.schrodinger.com/downloads/releases) (Not required for running the minimal example below, but required for reproducing out result)
+* [Schrödinger Suite](https://www.schrodinger.com/downloads/releases) (Not required for running the minimal example below, but required for reproducing our result)
 * [AFNMR](https://github.com/dacase/afnmr)
 * [AmberTools](https://ambermd.org/AmberTools.php)
 * [ORCA](https://www.orcasoftware.de/tutorials_orca/)
@@ -54,7 +54,7 @@ The calculated chemical shifts are in results.txt (shown below). Columns are res
 
 
 
-## Reproduce our MD/QM/MM results
+## Reproduce MD/QM/MM result
 
 ### MD simulation
 The DHFR initial structure we used for our MD simulations is in ./initial_structure/DHFR.pdb. The details to prepare the initial structure, as well as setup and run a MD simulation are in the paper. We provide the resulting 1μs MD trajectory [here](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0) (~2.5 GB).
