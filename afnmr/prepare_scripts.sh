@@ -69,19 +69,5 @@ rm \$tdir/
 
 " > ./${idx}/submit_${idx}.sh
 
-# echo "#!/bin/bash
-# #SBATCH --job-name=afnmr
-# #SBATCH --output=./logs/array_%A-%a.out
-# #SBATCH --error=./logs/array_%A-%a.err
-# #SBATCH --nodes=1
-# #SBATCH --ntasks=1
-# #SBATCH --time=00:01:00
-# #SBATCH -p fcpu
-
-# source ~/.bashrc
-# cd ./${idx}
-
-# rm *.tmp
-# " > ./${idx}/cleanup_${idx}.sh
 done
 

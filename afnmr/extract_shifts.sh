@@ -14,7 +14,6 @@ do
     else
         idx=${n}0
     fi
-    #filename=$(ls ../snapshots/ | sort -n | head -n ${n} | tail -1)
     filename=schrodinger_md_${idx}.pdb
 	filename=${filename%.*}
 	echo ${idx}
