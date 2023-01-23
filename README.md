@@ -14,6 +14,8 @@ This repo contains the code and files for the paper titled *Predicted and Experi
 
 ## Minimal example
 
+We provide here an example to run a QM/MM calculation using ORCA for MET1 in the first snapshot of the MD trajectory (schrodinger_md_0.pdb).
+
 ### Install
 Install [Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/), [AFNMR](https://github.com/dacase/afnmr), and [ORCA](https://www.orcasoftware.de/tutorials_orca/).
 
@@ -23,7 +25,7 @@ Clone the repository and setup the conda environment
 git clone git@github.com:zlcrrrr/DHFR_MD_QMMM.git
 conda env create -n AmberTools22 --file AmberTools22.yml
 ```
-Then run AFNMR and QM/MM calculations.
+Then run AFNMR and QM/MM calculations. 
 ```
 cd ./examples
 ./run_example.sh
@@ -92,7 +94,8 @@ Finally, extract the calculated chemical shifts. Results are in ./results/
 
 # Organization of this directory
 ```
-├── DHFR.pdb
+.
+├── AmberTools22.yml                        # environment file
 ├── README.md
 ├── afnmr
 │   ├── extract_shifts.sh
@@ -100,17 +103,21 @@ Finally, extract the calculated chemical shifts. Results are in ./results/
 │   ├── prepare_scripts.sh
 │   ├── run_afnmr.sh
 │   ├── run_minimization.sh
+│   ├── run_workflow.sh
 │   └── submit_all.sh
 ├── examples
-│   ├── schrodinger_md_0_061.orcainp
-│   ├── schrodinger_md_0_061.pos
-│   └── schrodinger_md_0_061.pqr
+│   ├── run_example.sh
+│   └── schrodinger_md_0.pdb
 ├── figures
 │   └── fig.png
+├── initial_structure
+│   └── DHFR.pdb
 ├── lib
 │   ├── SO4.frcmod
 │   ├── SO4.lib
 │   ├── TMP.frcmod
 │   └── TMP.lib
+├── scripts
+│   └── getshifts-orca-old
 └── trj2pdb.sh
 ```
