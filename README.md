@@ -28,6 +28,7 @@ conda env create -n AmberTools22 --file AmberTools22.yml
 Then run AFNMR and QM/MM calculations. 
 ```
 cd ./examples
+chmod +x ./run_example.sh
 ./run_example.sh
 ```
 The calculated chemical shifts are in results.txt (shown below). Columns are residue index, atom name, residue name, chemical shift, delta, eta, xx, yy, zz, respectively.
@@ -73,6 +74,7 @@ Then extract the snapshots
 Then submit minimization and AFNMR jobs to Slurm. 
 ```
 cd afnmr
+chmod +x ./*.sh
 ./run_workflow.sh
 ```
 
