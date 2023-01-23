@@ -57,7 +57,7 @@ The calculated chemical shifts are in results.txt (shown below). Columns are res
 ## Reproduce our MD/QM/MM results
 
 ### MD simulation
-The DHFR initial structure we used for our MD simulations is in ./initial_structure/DHFR.pdb. The details to prepare the initial structure, as well as setup and run a MD simulation are in the paper. We provide the resulting 1μs MD trajectory [here](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0).
+The DHFR initial structure we used for our MD simulations is in ./initial_structure/DHFR.pdb. The details to prepare the initial structure, as well as setup and run a MD simulation are in the paper. We provide the resulting 1μs MD trajectory [here](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0) (~2.5 GB).
 
 
 ### QM/MM calculations

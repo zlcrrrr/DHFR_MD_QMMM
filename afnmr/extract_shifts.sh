@@ -1,8 +1,4 @@
 #!/bin/bash
-if [! -f $AFNMRHOME/bin/getshifts-orca-old ]; then
-    cp ../scripts/getshifts-orca-old $AFNMRHOME/bin/
-fi
-
 if [ ! -d results ]
 then
 	mkdir results
@@ -18,12 +14,13 @@ do
     else
         idx=${n}0
     fi
+    #filename=$(ls ../snapshots/ | sort -n | head -n ${n} | tail -1)
     filename=schrodinger_md_${idx}.pdb
 	filename=${filename%.*}
 	echo ${idx}
 	touch ./results/results_${idx}.txt
 	cd ./${idx}
-	for i in {59..62}
+	for i in {1..159}
 	do
 		if [[ $i -lt 10 ]]
 		then

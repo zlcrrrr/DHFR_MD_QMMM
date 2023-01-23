@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=afnmr
+#SBATCH --job-name=afnmr_mini
 #SBATCH --output=./logs/array_%A-%a.out
 #SBATCH --error=./logs/array_%A-%a.out
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH -p fcpu
-#SBATCH --array=0
+#SBATCH --array=0-990:10
 
 if [[ $SLURM_ARRAY_TASK_ID -eq 0 ]]
 then
@@ -22,10 +22,16 @@ cd ./$idx
 filename=schrodinger_md_${idx}.pdb
 filename=${filename%.*}
 
-cp ../../snapshots/${filename}.pdb ./
+cp ../../snapshots_minimized/${filename}.pdb ./
 
-# fix residue names for Amber
+# fix residue naming for Amber
 sed -ie 's/T3P/WAT/g' ${filename}.pdb
 sed -i '/EPW/d' ${filename}.pdb
+
+# cleanup for Amber
 pdb4amber -i ${filename}.pdb -o ${filename}_.pdb
-$AFNMRHOME/bin/afnmr -nomin -orca -offlib ../../lib/SO4.lib -offlib ../../lib/TMP.lib -frcmod ../../lib/SO4.frcmod -frcmod ../../lib/TMP.frcmod ${filename}_
+
+# run AFNMR
+LIB="../../lib"
+$AFNMRHOME/bin/afnmr -nomin -orca -offlib $LIB/SO4.lib -offlib $LIB/TMP.lib -frcmod $LIB/SO4.frcmod -frcmod $LIB/TMP.frcmod ${filename}_
+

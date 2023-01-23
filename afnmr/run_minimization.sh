@@ -18,11 +18,11 @@ fi
 mkdir $idx
 cd ./$idx
 filename=schrodinger_md_${idx}.pdb
-cp ../../../schrodinger_md_10A_Na_300K_1000ns/snapshots/${filename} ./schrodinger_md_${idx}_original.pdb
+cp ../../snapshots/${filename} ./schrodinger_md_${idx}_original.pdb
 
 filename=${filename%.*}
 
 if [[ $minimization -eq 'Y' ]]
 then
-    $SCHRODINGER/utilities/prepwizard -NOJOBID -HOST 'fcpu' -nobondorders -noccd -nohtreat -noidealizehtf -keepfarwat -nometaltreat -noepik -noprotassign -nopropka ${filename}_original.pdb ${filename}.pdb
+    $SCHRODINGER/utilities/prepwizard -NOJOBID -HOST 'fcpu' -nobondorders -noccd -nohtreat -noidealizehtf -keepfarwat -nometaltreat -noepik -noprotassign -nopropka -RMSD 0.3 ${filename}_original.pdb ${filename}.pdb
 fi

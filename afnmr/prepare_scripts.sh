@@ -1,5 +1,5 @@
 #!/bin/bash
-for i in {0..10..10}
+for i in {0..990..10}
 do
 if [[ $i -eq 0 ]]
 then
@@ -15,7 +15,7 @@ echo "#!/bin/bash
 #SBATCH --ntasks=1
 #SBATCH --time=03:00:00
 #SBATCH -p fcpu
-#SBATCH --array=61
+#SBATCH --array=1-159
 
 source ~/.bashrc
 cd ./${idx}
@@ -39,9 +39,9 @@ fi
 inputfile=\"\${filename}_\${appendix}.orcainp\"
 outputfile=\"\${filename}_\${appendix}.out\"
 
-#if [ -f \$outputfile ]; then
-#    exit 1
-#fi
+if [ -f \$outputfile ]; then
+    exit 1
+fi
 
 module load orca
 
@@ -64,11 +64,24 @@ orca \$inputfile > \$outputfile
 
 # cp output to working dir
 cd \$working_dir
-cp \$tdir/* ./
-#cp \$tdir/\$outputfile ./
-rm -r \$tdir/
+cp \$tdir/\$outputfile ./
+rm \$tdir/
 
 " > ./${idx}/submit_${idx}.sh
 
+# echo "#!/bin/bash
+# #SBATCH --job-name=afnmr
+# #SBATCH --output=./logs/array_%A-%a.out
+# #SBATCH --error=./logs/array_%A-%a.err
+# #SBATCH --nodes=1
+# #SBATCH --ntasks=1
+# #SBATCH --time=00:01:00
+# #SBATCH -p fcpu
+
+# source ~/.bashrc
+# cd ./${idx}
+
+# rm *.tmp
+# " > ./${idx}/cleanup_${idx}.sh
 done
 
