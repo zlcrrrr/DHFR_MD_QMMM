@@ -16,6 +16,12 @@ The molecular dynamics trajectory, minimized MD snapshots and predicted chemical
 * [AmberTools](https://ambermd.org/AmberTools.php)
 * [ORCA](https://www.orcasoftware.de/tutorials_orca/)
 
+### Setup environment
+```
+git clone git@github.com:zlcrrrr/DHFR_MD_QMMM.git
+conda env create -n AmberTools22 --file AmberTools22.yml
+```
+
 ### MD simulation
 The DHFR initial structure (DHFR\_init.pdb) and the prepared structure for MD (DHFR\_md\_input.pdb) are in ./initial_structure. The details of the initial structure preparation, and MD simulation setup are in the paper. We provide the 1μs MD trajectory we used in the paper [here](https://osf.io/wqyb4/) (~6.75 GB). For reproducing the trajectory, you need to install [Schrödinger Suite](https://www.schrodinger.com/downloads/releases).
 
