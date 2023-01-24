@@ -5,6 +5,11 @@ then
 else
 	rm ./results/*
 fi
+
+# if [ ! -f $AFNMRHOME/bin/getshifts-orca-old ]; then
+#     cp ../bin/getshifts-orca-old $AFNMRHOME/bin/getshifts-orca-old
+# fi
+
 basename=""
 for n in {0..990..10}
 do
@@ -31,7 +36,7 @@ do
 		then
 		    appendix="${i}" 
 		fi
-		$AFNMRHOME/bin/getshifts-orca-old ref_seg0 ${filename}_${appendix} >> ../results/results_${idx}.txt
+		../bin/getshifts-orca-old ref_seg0 ${filename}_${appendix} >> ../results/results_${idx}.txt
 	done
 	grep -w 'C' ../results/results_${idx}.txt > ../results/C_results_${idx}.txt
 	grep -w 'N' ../results/results_${idx}.txt > ../results/N_results_${idx}.txt

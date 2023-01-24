@@ -5,4 +5,4 @@ if ! [ -d "./logs/" ]; then
 fi
 
 minimization_job_id=$(sbatch --parsable run_minimization.sh) # run the restrained minimization using Schrödinger Suite
-afnmr_job_id=$(sbatch --parsable --dependency=afterany:${minimization_job_id} run_afnmr.sh )
+afnmr_job_id=$(sbatch --parsable --dependency=afterany:${minimization_job_id} run_afnmr.sh ) # run afnmr

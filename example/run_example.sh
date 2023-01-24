@@ -22,5 +22,4 @@ outputfile="schrodinger_md_0_001.out"
 orca $inputfile > $outputfile
 
 # extract shifts
-cp ../scripts/getshifts-orca-old $AFNMRHOME/bin/
-$AFNMRHOME/bin/getshifts-orca-old ref_seg0 schrodinger_md_0_001 > results.txt
+../bin/getshifts-orca-old ref_seg0 schrodinger_md_0_001 > results.txt

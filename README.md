@@ -1,20 +1,65 @@
 # DHFR_MD_QMMM
 
-This repo contains the code and files for the paper titled *Predicted and Experimental NMR Chemical Shifts at Variable Temperatures: The Effect of Protein Conformational Dynamics*. The molecular dynamics trajectory we used in the paper can be downloaded at [here](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0).
+This repo contains the code and files for the paper titled *Predicted and Experimental NMR Chemical Shifts at Variable Temperatures: The Effect of Protein Conformational Dynamics*. 
 
 ![Fig](./figures/fig.png)
 
-## Prerequisite
+## Data availability
+The molecular dynamics trajectory, minimized MD snapshots and predicted chemical shifts we used in the paper can be downloaded at [here](https://osf.io/wqyb4/).
+
+## Reproduce MD/QM/MM
+
+### Prerequisite
 * [Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/)
-* [Schrödinger Suite](https://www.schrodinger.com/downloads/releases) (Not required for running the minimal example below, but required for reproducing our MD trajectory)
+* [Schrödinger Suite](https://www.schrodinger.com/downloads/releases) (Not required for running the minimal example below, but required for reproducing our MD trajectory and minimized snapshots)
 * [AFNMR](https://github.com/dacase/afnmr)
 * [AmberTools](https://ambermd.org/AmberTools.php)
 * [ORCA](https://www.orcasoftware.de/tutorials_orca/)
 
+### MD simulation
+The DHFR initial structure (DHFR\_init.pdb) and the prepared structure for MD (DHFR\_md\_input.pdb) are in ./initial_structure. The details of the initial structure preparation, and MD simulation setup are in the paper. We provide the 1μs MD trajectory we used in the paper [here](https://osf.io/wqyb4/) (~6.75 GB). For reproducing the trajectory, you need to install [Schrödinger Suite](https://www.schrodinger.com/downloads/releases).
 
-## Minimal example
+### QM/MM calculation
+Note: we performed all the AFNMR and QMMM calculations described in the paper on a HPC cluster using Slurm. The scripts provided in the respository are just examples. You may need to tweak our scripts to fit your computing environment.
 
-We provide here an example to run a AF-QM/MM calculation using AFNMR and ORCA for the first residue (MET1) in the first snapshot of the MD trajectory (schrodinger_md_0.pdb).
+Download the [MD trajectory and snapshot](https://osf.io/wqyb4/). Move the content of the folder named trj to the repository, and extract MD snapshots from the trajectory to a folder named snapshots
+```
+cd sh
+chmod +x ./*.sh
+./extract_shifts.sh # this requires Schrodinger Suite. But you can use free softwares like VMD to do the same job as well.
+```
+
+Then submit minimization and AFNMR jobs to Slurm. 
+```
+cd sh
+chmod +x ./*.sh
+./run_workflow.sh # this scripts requires Schrodinger Suite
+```
+
+Or you can use the minimized snapshots we provided and skip the steps above: copy the folder ./minimized\_snapshots to the repository
+```
+cd sh
+chmod +x ./*.sh
+sbatch run_afnmr.sh
+```
+
+After the minimization and AFNMR jobs are done, run
+```
+./prepare_scripts.sh # prepare QM/MM calculation scripts
+```
+and 
+```
+./submit_all.sh # submit QM/MM calculation jobs to Slurm.
+```
+
+Finally, extract the calculated chemical shifts. Results are in ./results/
+```
+./extract_shifts.sh
+```
+
+### Minimal example
+
+We provide an example to run a AF-QM/MM calculation using AFNMR and ORCA for the first residue (MET1) in the first snapshot of the MD trajectory (schrodinger_md_0.pdb).
 
 Install [Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/), [AFNMR](https://github.com/dacase/afnmr), and [ORCA](https://www.orcasoftware.de/tutorials_orca/).
 
@@ -26,7 +71,7 @@ conda env create -n AmberTools22 --file AmberTools22.yml
 ```
 Then run AFNMR and QM/MM calculations. 
 ```
-cd ./DHFR_MD_QMMM/examples
+cd ./DHFR_MD_QMMM/example
 chmod +x ./run_example.sh
 ./run_example.sh
 ```
@@ -54,63 +99,20 @@ The calculated chemical shifts are in results.txt (as shown below). Columns are 
 
 
 
-## Reproduce MD/QM/MM result
-
-### MD simulation
-The DHFR initial structure (DHFR_init.pdb) and the prepared structure for MD (DHFR_md_input.pdb) are in ./initial_structure. The details of the initial structure preparation, and MD simulation setup are in the paper. We provide the 1μs MD trajectory we used in the paper [here](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0) (~2.5 GB). For reproducing the trajectory, you need to install [Schrödinger Suite](https://www.schrodinger.com/downloads/releases).
-
-### QM/MM calculation
-Note: we performed all the AFNMR and QMMM calculations described in the paper on a HPC cluster using Slurm. The scripts provided in the respository are just examples. You may need to tweak our scripts to fit your computing environment.
-
-Download the [MD trajectory](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0), and copy the MD trajectory files to ./afnmr. 
-
-Then extract the MD snapshots (this requires [Schrödinger Suite](https://www.schrodinger.com/downloads/releases) that is not freely availiable, but other free softwares can do the same job such as [VMD](http://www.ks.uiuc.edu/Research/vmd/)). The extracted MD snapshots need to be placed in ./snapshots
-```
-./trj2pdb.sh # this uses a Schrödinger script.
-```
-
-Then submit minimization and AFNMR jobs to Slurm. 
-```
-cd data
-chmod +x ./*.sh
-./run_workflow.sh
-```
-
-After the minimization and AFNMR jobs are done, run
-```
-./prepare_scripts.sh # prepare QM/MM calculation scripts
-```
-and 
-```
-./submit_all.sh # submit QM/MM calculation jobs to Slurm
-```
-
-Finally, extract the calculated chemical shifts. Results are in ./results/
-```
-./extract_shifts.sh
-```
-
-
-
 # Organization of this directory
 ```
 .
 ├── AmberTools22.yml
+├── LICENSE.md
 ├── README.md
-├── afnmr
-│   ├── extract_shifts.sh
-│   ├── logs
-│   ├── prepare_scripts.sh
-│   ├── run_afnmr.sh
-│   ├── run_minimization.sh
-│   ├── run_workflow.sh
-│   └── submit_all.sh
-├── examples
+├── bin
+│   └── getshifts-orca-old
+├── example
 │   ├── run_example.sh
 │   └── schrodinger_md_0.pdb
 ├── figures
 │   └── fig.png
-├── initial_structure
+├── initial_structures
 │   ├── DHFR_init.pdb
 │   └── DHFR_md_input.pdb
 ├── lib
@@ -118,7 +120,15 @@ Finally, extract the calculated chemical shifts. Results are in ./results/
 │   ├── SO4.lib
 │   ├── TMP.frcmod
 │   └── TMP.lib
-├── scripts
-│   └── getshifts-orca-old
+├── sh
+│   ├── extract_shifts.sh
+│   ├── logs
+│   ├── prepare_scripts.sh
+│   ├── run_afnmr.sh
+│   ├── run_minimization.sh
+│   ├── run_workflow.sh
+│   └── submit_all.sh
 └── trj2pdb.sh
+
+7 directories, 20 files
 ```
