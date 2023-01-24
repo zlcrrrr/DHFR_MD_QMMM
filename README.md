@@ -1,4 +1,4 @@
-# DHFR_MD_QMMM
+# DHFR\_MD\_QMMM
 
 This repo contains the code and files for the paper titled *Predicted and Experimental NMR Chemical Shifts at Variable Temperatures: The Effect of Protein Conformational Dynamics*. 
 
@@ -22,7 +22,7 @@ The DHFR initial structure (DHFR\_init.pdb) and the prepared structure for MD (D
 ### QM/MM calculation
 Note: we performed all the AFNMR and QMMM calculations described in the paper on a HPC cluster using Slurm. The scripts provided in the respository are just examples. You may need to tweak our scripts to fit your computing environment.
 
-Download the [MD trajectory and snapshot](https://osf.io/wqyb4/). Move the content of the folder named trj to the repository, and extract MD snapshots from the trajectory to a folder named snapshots
+Download the [MD trajectory and snapshots](https://osf.io/wqyb4/). Unzip and move the contents of the downloaded folders to the repository, and extract MD snapshots from the trajectory to a folder named snapshots
 ```
 cd sh
 chmod +x ./*.sh
@@ -36,7 +36,7 @@ chmod +x ./*.sh
 ./run_workflow.sh # this scripts requires Schrodinger Suite
 ```
 
-Or you can use the minimized snapshots we provided and skip the steps above: copy the folder ./minimized\_snapshots to the repository
+Or you can use the minimized snapshots we provided and skip the steps above
 ```
 cd sh
 chmod +x ./*.sh
@@ -52,7 +52,7 @@ and
 ./submit_all.sh # submit QM/MM calculation jobs to Slurm.
 ```
 
-Finally, extract the calculated chemical shifts. Results are in ./results/
+Finally, extract the calculated chemical shifts. Results are in a folder ./sh/results/
 ```
 ./extract_shifts.sh
 ```
