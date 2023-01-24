@@ -57,14 +57,9 @@ The calculated chemical shifts are in results.txt (as shown below). Columns are 
 ## Reproduce MD/QM/MM result
 
 ### MD simulation
-<<<<<<< HEAD
 The DHFR initial structure (DHFR_init.pdb) and the prepared structure for MD (DHFR_md_input.pdb) are in ./initial_structure. The details of the initial structure preparation, and MD simulation setup are in the paper. We provide the 1μs MD trajectory we used in the paper [here](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0) (~2.5 GB). For reproducing the trajectory, you need to install [Schrödinger Suite](https://www.schrodinger.com/downloads/releases).
-=======
-The DHFR initial structure we used for our MD simulations is in ./initial_structure/DHFR.pdb. The details to prepare the initial structure, as well as setup and run a MD simulation are in the paper. We provide the resulting 1μs MD trajectory [here](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0) (~2.5 GB). For reproducing the trajectory, you need to install [Schrödinger Suite](https://www.schrodinger.com/downloads/releases).
->>>>>>> 15b8bf1ccfbde83ba7147c87e0f419cae1bbb186
 
-
-### QM/MM calculations
+### QM/MM calculation
 Note: we performed all the AFNMR and QMMM calculations described in the paper on a HPC cluster using Slurm. The scripts provided in the respository are just examples. You may need to tweak our scripts to fit your computing environment.
 
 Download the [MD trajectory](https://www.dropbox.com/sh/oeh8vczn4689mx3/AABoW2OhKz--cKl6iIzvho3ra?dl=0), and copy the MD trajectory files to ./afnmr. 
