@@ -1,6 +1,6 @@
 # DHFR\_MD\_QMMM
 
-This repo contains the code and files for the paper titled *[Predicted and Experimental NMR Chemical Shifts at Variable Temperatures: The Effect of Protein Conformational Dynamics](https://doi.org/10.1021/acs.jpclett.3c02589)*. 
+This repo contains the code and files for the paper titled *[Predicted and Experimental NMR Chemical Shifts at Variable Temperatures: The Effect of Protein Conformational Dynamics](https://doi.org/10.1021/acs.jpclett.3c02589) (J. Phys. Chem. Lett. 2024, 15, 8, 2270–2278)*. 
 
 ![Fig](./figures/fig.png)
 
